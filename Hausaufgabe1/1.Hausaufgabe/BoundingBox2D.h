@@ -8,7 +8,7 @@ class BoundingBox2D
 {
 public:
 	BoundingBox2D();
-	BoundingBox2D(Point2D* start, double width, double height);
+	BoundingBox2D(Point2D& start, double width, double height);
 	~BoundingBox2D();
 	double getWidth() const;
 	double getHeight() const;

@@ -6,10 +6,10 @@
 #include <string>
 #include <iterator>
 
-vector<Point2D>::iterator it;
-
 using namespace std;
 using std::vector;
+
+vector<Point2D>::iterator it;
 
 class Point2D;
 class Polyline2D: public Line2D

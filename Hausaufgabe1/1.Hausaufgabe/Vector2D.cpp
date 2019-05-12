@@ -1,14 +1,10 @@
 #include "Vector2D.h"
 #include "Point2D.h"
 
-
-
-
 Vector2D::Vector2D(double deltax, double deltay)
 	:deltaX(deltax), deltaY(deltay)
 {
 }
-
 
 Vector2D::~Vector2D()
 {
@@ -31,11 +27,9 @@ Vector2D Vector2D::add(const Vector2D& other) const
 	return Vector2D(this->deltaX + other.deltaX, this->deltaY + other.deltaY);
 }
 
-//subtrahiert von dem Vektor den übergebenen Vektor
+//subracts other from this
 Vector2D Vector2D::subtract(const Vector2D& other) const
 {
-
-
 	return Vector2D(this->deltaX - other.deltaX, this->deltaY - other.deltaY);
 }
 
@@ -55,9 +49,9 @@ double Vector2D::getOrientation() const
 	return alpha;
 }
 
+//skalarprodukt
 double Vector2D::multiply(const Vector2D & other) const
 {
-	//TODO
-	return 0.0;
+	return this->deltaX * other.deltaX + this->deltaY * other.deltaY;
 }
 
