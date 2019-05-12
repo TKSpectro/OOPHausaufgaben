@@ -33,6 +33,9 @@
 
 #own added
 .vs/
+*.suo
+*.db
+*.ipch
 x64/
 x64
 *.vcxproj
