@@ -41,7 +41,5 @@ x64
 *.log
 *.idb
 *.pdb
-2.Hausaufgabe/2.Hausaufgabe.vcxproj.filters
-2.Hausaufgabe/2.Hausaufgabe.vcxproj.user
 *.lastbuildstate
 *.tlog
