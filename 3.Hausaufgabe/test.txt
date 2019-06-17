@@ -1,0 +1,4 @@
+//Datei für das einlesen
+// "//" bedeutet Kommentar -> diese Zeile muss übersprungen werden falls die Zeichenfolge eingelesen wird
+//
+//
