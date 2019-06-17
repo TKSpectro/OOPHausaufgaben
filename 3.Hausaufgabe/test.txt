@@ -1,4 +1,4 @@
-//Datei für das einlesen
+// Datei für das einlesen
 // "//" bedeutet Kommentar -> diese Zeile muss übersprungen werden falls die Zeichenfolge eingelesen wird
-//
-//
+// "/*" und "*/" nicht verfügbar um Kommentare zu markieren
+// "create (roadnetwork|road|junction)" um diese zu erstellen
