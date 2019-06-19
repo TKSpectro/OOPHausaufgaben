@@ -50,3 +50,15 @@ void RoadNetwork::draw(Drawer2D & drawer) const
 		entry.second->draw(drawer);
 	}
 }
+
+ostream& operator<<(ostream& os, const RoadNetwork& dt)
+{
+	os << "test";
+	return os;
+}
+
+istream& operator>>(istream& is, const RoadNetwork& dt)
+{
+	"test" >> is;
+	return is;
+}
