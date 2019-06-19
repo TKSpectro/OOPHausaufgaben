@@ -30,7 +30,7 @@ public:
 	void add(Road& road);
 	void remove(Road& road);
 	void remove(Junction& junction);
-	void draw(Drawer2D& drawer) const;
+	//void draw(Drawer2D& drawer) const;
 	friend ostream& operator<<(ostream& os, const RoadNetwork& dt);
 	friend istream& operator>>(istream& os, const RoadNetwork& dt);
 private:
