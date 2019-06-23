@@ -41,15 +41,15 @@ void RoadNetwork::remove(Junction & junction)
 	}
 }
 
-//void RoadNetwork::draw(Drawer2D & drawer) const
-//{
-//	for (RoadMap::value_type entry : this->roads) {
-//		entry.second->draw(drawer);
-//	}
-//	for (NodeMap::value_type entry : this->junctions) {
-//		entry.second->draw(drawer);
-//	}
-//}
+void RoadNetwork::draw(Drawer2D & drawer) const
+{
+	for (RoadMap::value_type entry : this->roads) {
+		entry.second->draw(drawer);
+	}
+	for (NodeMap::value_type entry : this->junctions) {
+		entry.second->draw(drawer);
+	}
+}
 
 ostream& operator<<(ostream& os, const RoadNetwork& dt)
 {

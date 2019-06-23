@@ -18,15 +18,15 @@ int main()
 	MotorVehicle veh2(60, 8E-5, MotorVehicle::PETROL);
 
 	RoadNetwork rn;
-	//Point2D p1(100, 120);
+	Point2D p1(100, 120);
 	Junction j1(p1, rn, "Hanseplatz");
-	//TurtleDrawer2D drawer;
+	TurtleDrawer2D drawer;
 	Junction j2(Point2D(300, 250), rn, "Leipziger Platz");
 	Polyline2D ls(p1, Point2D(200, 400));
 	ls.insertPoint(Point2D(250, 100), 2);
 	Road leipzigerStr(j1, j2, ls, "Leipziger Straﬂe");
 	Road umweg(j2, j1, Polyline2D(Point2D(300, 250), Point2D(100, 150)), "Umweg");
-	//rn.draw(drawer);
+	rn.draw(drawer);
 
 	leipzigerStr.addVehicle(veh1, true);
 	leipzigerStr.addVehicle(veh2, true);
