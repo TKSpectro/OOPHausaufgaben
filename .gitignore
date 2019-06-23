@@ -43,4 +43,4 @@ x64
 *.pdb
 *.lastbuildstate
 *.tlog
-**/Debug/
+**/Debug
