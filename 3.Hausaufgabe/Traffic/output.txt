@@ -1,0 +1,7 @@
+Output of TrafficProject RoadNetwork.save()
+Junction 100 120 Hanseplatz
+Junction 300 250 LeipzigerPlatz
+Road Hanseplatz LeipzigerPlatz LeipzigerStraﬂe
+100 120 200 400 300 250 
+Road LeipzigerPlatz Hanseplatz Umweg
+300 250 100 120 

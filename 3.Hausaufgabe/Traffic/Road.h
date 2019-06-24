@@ -22,30 +22,33 @@ using std::map;
 class Junction;
 class RoadNetwork;
 
-class Road {
+class Road
+{
 public:
-    Road(Junction& start, Junction& end, const Polyline2D& position, const char roadName[]);
+	Road(Junction& start, Junction& end, const Polyline2D& position, const char roadName[]);
 	~Road();
-    double getLength();
-    bool addVehicle(Vehicle& veh, bool atStart);
-    bool removeVehicle(Vehicle& veh);
+	double getLength();
+	bool addVehicle(Vehicle& veh, bool atStart);
+	bool removeVehicle(Vehicle& veh);
 	const char* getName() const;
 	void draw(Drawer2D& drawer) const;
 	Junction* getJunction(bool atStart) const;
 	// Returns the coordinate of tzhe given vehicle (if it's on the road),
 	// If the vehicle is off the road, then the result will be invalid
 	Point2D getPosition(const Vehicle& vehicle) const;
+	Polyline2D course;
 private:
-	struct VehicleInfo {
+	struct VehicleInfo
+	{
 		double startPosition;	// odometer value on joining the road
 		bool atStart;
 	};
 	static const unsigned short MAX_NETWORKS = 2;
-    Junction *startNode;
-    Junction *endNode;
-    map<const Vehicle*, VehicleInfo> vehicles;
-	RoadNetwork * networks[MAX_NETWORKS];
-	Polyline2D course;
+	Junction* startNode;
+	Junction* endNode;
+	map<const Vehicle*, VehicleInfo> vehicles;
+	RoadNetwork* networks[MAX_NETWORKS];
+
 	char* name;
 };
 

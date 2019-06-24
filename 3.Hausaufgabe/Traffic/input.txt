@@ -1,0 +1,5 @@
+Junction 50 50 Knoten1
+Road null Knoten1 Strasse1
+10 10 15 15
+Road Knoten1 null Strasse2
+65 65 100 100

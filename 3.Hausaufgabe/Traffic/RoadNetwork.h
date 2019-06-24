@@ -32,6 +32,8 @@ public:
 	void remove(Road& road);
 	void remove(Junction& junction);
 	void draw(Drawer2D& drawer) const;
+	bool save(string path);
+
 	friend ostream& operator<<(ostream& os, const RoadNetwork& dt);
 	friend istream& operator>>(istream& os, const RoadNetwork& dt);
 private:
