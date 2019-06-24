@@ -33,15 +33,15 @@ int main()
 
 	veh1.setSpeed(13.9);
 	veh2.setSpeed(13.9);
-	for (int i = 0; i < 100; i++) {
-		std::this_thread::sleep_for(std::chrono::milliseconds(2000));
-		rn.draw(drawer);
-		cout << "veh1 is at position " << veh1.getPosition() << std::endl;
-		cout << "veh2 is at position " << veh2.getPosition() << std::endl;
-		if (i == 3) {
-			veh2.setSpeed(13.9);
-		}
-	}
+	//for (int i = 0; i < 100; i++) {
+	//	std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+	//	rn.draw(drawer);
+	//	cout << "veh1 is at position " << veh1.getPosition() << std::endl;
+	//	cout << "veh2 is at position " << veh2.getPosition() << std::endl;
+	//	if (i == 3) {
+	//		veh2.setSpeed(13.9);
+	//	}
+	//}
 
 	return 0;
 }
