@@ -53,12 +53,18 @@ void RoadNetwork::draw(Drawer2D & drawer) const
 
 ostream& operator<<(ostream& os, const RoadNetwork& dt)
 {
-	os << "test";
+	
+	//geht der reihe nach durch die Joints und Road und schreibt diese in eine Textdatei
+	os << "<< geht" << endl;
 	return os;
 }
 
 istream& operator>>(istream& is, const RoadNetwork& dt)
 {
+	//erstellen der Roadmap mit leeren Maps
+	//muss eine verketteListe von Roads / Joints anlegen
+	//diese müssen im Heap angelegt werden
 
+	cout << ">> geht" << endl;
 	return is;
 }
