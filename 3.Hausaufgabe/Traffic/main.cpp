@@ -33,6 +33,14 @@ int main()
 
 	veh1.setSpeed(13.9);
 	veh2.setSpeed(13.9);
+
+	// Test the ouput of an existing roadnetwork
+
+
+	// Test the input of an roadnetwork via a text file
+
+
+
 	//for (int i = 0; i < 100; i++) {
 	//	std::this_thread::sleep_for(std::chrono::milliseconds(2000));
 	//	rn.draw(drawer);

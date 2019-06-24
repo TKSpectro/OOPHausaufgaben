@@ -1,6 +1,6 @@
 / Datei für das einlesen
 / "/" bedeutet Kommentar -> diese Zeile muss übersprungen werden falls die Zeichenfolge eingelesen wird
 / Die Reihenfolge des erstellens muss beachtet werden:
-/ erst alle Roads, dann alle Junctions und dann alle RoadMaps (falls es mehrere gibt)
+/ erst alle Roads, dann alle Junctions und dann die Roadmap
 
 Road 14 2 3

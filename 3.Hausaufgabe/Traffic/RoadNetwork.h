@@ -18,6 +18,7 @@ using std::multimap;
 using std::string;
 #include "Drawer2D.h"
 #include <iostream>
+#include <fstream>
 using namespace std;
 
 class Junction;
