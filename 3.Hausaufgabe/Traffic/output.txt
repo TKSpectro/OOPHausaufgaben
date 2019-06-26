@@ -1,4 +1,4 @@
-Junction;100;120;Hanseplatz;IN;Umweg;OUT;LeipzigerStraﬂe;
-Junction;300;250;LeipzigerPlatz;IN;LeipzigerStraﬂe;OUT;Umweg;
-Road;Hanseplatz;LeipzigerPlatz;LeipzigerStraﬂe;100;120;200;400;300;250
-Road;LeipzigerPlatz;Hanseplatz;Umweg;300;250;100;120
+Junction;100;120;Hanseplatz;IN;Umweg;OUT;Leipziger Straﬂe;
+Junction;300;250;Leipziger Platz;IN;Leipziger Straﬂe;OUT;Umweg;
+Road;Hanseplatz;Leipziger Platz;Leipziger Straﬂe;100;120;200;400;300;250;
+Road;Leipziger Platz;Hanseplatz;Umweg;300;250;100;120;

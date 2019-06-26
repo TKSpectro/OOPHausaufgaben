@@ -1,6 +1,7 @@
 #include "RoadNetwork.h"
 #include "Junction.h"
 #include "Road.h"
+#include <sstream>
 
 bool RoadNetwork::add(Junction& junction)
 {
@@ -102,12 +103,12 @@ bool RoadNetwork::save(string path)
 			outFile << "Road" << ";" // keyword
 				<< element.second->getJunction(true)->getName() << ";" // startJunction
 				<< element.second->getJunction(false)->getName() << ";" // endJunction
-				<< element.second->getName(); // roadName
+				<< element.second->getName() << ";"; // roadName
 
 			for(unsigned short i = 0; i < element.second->course.getNumberOfPoints(); i++) //for every point
 			{
-				outFile << ";" << element.second->course.getPoint(i).getX()
-					<< ";" << element.second->course.getPoint(i).getY();
+				outFile << element.second->course.getPoint(i).getX() << ";"
+					<< element.second->course.getPoint(i).getY() << ";";
 			}
 			outFile << "\n";
 		}
@@ -130,11 +131,10 @@ bool RoadNetwork::load(string path)
 	{
 		string line;
 		cout << "inputFile opened" << endl;
+		cout << "________________" << endl;
 		while(getline(inFile, line))
 		{
 			/*
-			Array von Roads erstellen
-			Array von Junctions erstellen
 			Alle erstmal einlesen
 			for(roads){
 			Road.JunctionStartName = Junctions.junctionName
@@ -143,22 +143,81 @@ bool RoadNetwork::load(string path)
 			}
 			*/
 
-			if(line.find("Road") != string::npos)
+			//if(line.find("Road") != string::npos)
+			//{			
+			//}
+			//else if(line.find("Junction") != string::npos)
+			//{
+			//	//const Point2D& position, RoadNetwork& network, const char junctionName[]
+			//	//double x; double y;
+			//	//Point2D* pos = new Point2D();
+			//	//Junction* junc = new Junction();
+			
+			string delimiter = ";";
+			unsigned int pos = 0;
+			std::string token;
+			//Function or Road
+			pos = line.find(delimiter);
+			token = line.substr(0, pos);
+			line.erase(0, pos + delimiter.length());
+			if(token == "Junction")
 			{
-				cout << "found Road:     ";
+				cout << "Found Junction" << endl;
+				//get X
+				pos = line.find(delimiter);
+				token = line.substr(0, pos);
+				line.erase(0, pos + delimiter.length());
+				double x = stod(token);
+				cout << "X-Value:" << token << endl;
+
+				//get Y
+				pos = line.find(delimiter);
+				token = line.substr(0, pos);
+				line.erase(0, pos + delimiter.length());
+				double y = stod(token);
+				cout << "Y-Value:" << token << endl;
+
+				//get Name 
+				pos = line.find(delimiter);
+				token = line.substr(0, pos);
+				line.erase(0, pos + delimiter.length());
+				cout << "Name:" << token << endl;
+				char* str = strcpy(token);
+				Point2D* pos = new Point2D(x, y);
+				Junction* junc = new Junction(pos,this, token);
+				
+				
 			}
-			else if(line.find("Junction") != string::npos)
+			else if(token == "Road")
 			{
-				cout << "found Junction: ";
+				cout << "Found Road" << endl;
 			}
-			else
-			{
-				cout << "only numbers:   ";
-			}
-			cout << line;
-			cout << endl;
+
+
+
+			//while((pos = line.find(delimiter)) != std::string::npos)
+			//{
+			//	token = line.substr(0, pos);
+			//	std::cout << token << std::endl;
+			//	line.erase(0, pos + delimiter.length());
+			//}
+			//cout << line << endl;
+
+
+
+
+			//}
+			//else
+			//{
+			//	cout << "only numbers:   ";
+			//}
+			////cout << line;
+			//cout << endl;
+
+
 		}
 		inFile.close();
+		cout << "----------------" << endl;
 		cout << "inputFile closed" << endl;
 		return true;
 	}
