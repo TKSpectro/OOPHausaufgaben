@@ -32,11 +32,12 @@ public:
 	const char* getName() const;
 	Point2D getLocation() const;
 	void draw(Drawer2D& drawer) const;
+	list<Road*> outRoads;
+	list<Road*> inRoads;
 private:
 	char* name;
 	Point2D location;
-	list<Road*> outRoads;
-	list<Road*> inRoads;
+
 	RoadNetwork *network;
 	bool join(Road& road, bool atStart);
 	bool disjoin(Road& road, bool atStart);

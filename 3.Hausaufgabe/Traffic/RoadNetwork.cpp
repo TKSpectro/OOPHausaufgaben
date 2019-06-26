@@ -63,10 +63,8 @@ bool RoadNetwork::save(string path)
 	ofstream outFile(path);
 	if(outFile.is_open())
 	{
-		cout << "File opened" << endl;
-		outFile << "Output of TrafficProject RoadNetwork.save()\n";
+		cout << "outputFile opened" << endl;
 
-		//mithilfe von iterator durch die Road/Junction Maps durchgehen und diese in die Datei schreiben
 		//for(string str : this->junctions.first)
 		for(auto const& element : this->junctions)
 		{
@@ -74,11 +72,24 @@ bool RoadNetwork::save(string path)
 			/*
 				"Junction PositionX PositionY junctionName"
 			*/
-			outFile << "Junction " // keyword
-				<< element.second->getLocation().getX() << " " // x-value
-				<< element.second->getLocation().getY() << " " // y-value
-				<< element.second->getName() // junctionName
-				<< endl;
+			outFile << "Junction" << ";" // keyword
+				<< element.second->getLocation().getX() << ";" // x-value
+				<< element.second->getLocation().getY() << ";" // y-value
+				<< element.second->getName() << ";"; // junctionName
+
+			//put the inRoads
+			outFile << "IN" << ";";
+			for(auto const& el : element.second->inRoads)
+			{
+				outFile << el->getName() << ";";
+			}
+			//put the outRoads
+			outFile << "OUT" << ";";
+			for(auto const& el : element.second->outRoads)
+			{
+				outFile << el->getName() << ";";
+			}
+			outFile << "\n";
 		}
 
 		for(auto const& element : this->roads)
@@ -88,24 +99,67 @@ bool RoadNetwork::save(string path)
 				"Road junctionNameStart junctionNameEnd RoadName
 				All Points in order with -> P1x P1y P2x P2y P3x P3y ...."
 			*/
-			outFile << "Road" << " " // keyword
-				<< element.second->getJunction(true)->getName() << " " // startJunction
-				<< element.second->getJunction(false)->getName() << " " // endJunction
-				<< element.second->getName() // roadName
-				<< endl;
-			for(unsigned short i = 0; i < element.second->course.getNumberOfPoints(); i++)
+			outFile << "Road" << ";" // keyword
+				<< element.second->getJunction(true)->getName() << ";" // startJunction
+				<< element.second->getJunction(false)->getName() << ";" // endJunction
+				<< element.second->getName(); // roadName
+
+			for(unsigned short i = 0; i < element.second->course.getNumberOfPoints(); i++) //for every point
 			{
-				outFile << element.second->course.getPoint(i).getX()
-					<< " " << element.second->course.getPoint(i).getY() << " ";
+				outFile << ";" << element.second->course.getPoint(i).getX()
+					<< ";" << element.second->course.getPoint(i).getY();
 			}
-			outFile << endl;
+			outFile << "\n";
 		}
-
-
-
-
 		outFile.close();
-		cout << "File closed" << endl;
+		cout << "outputFile closed" << endl;
+		return true;
+	}
+	else
+	{
+		cout << "Unable to open file" << endl;
+		return false;
+	}
+}
+
+bool RoadNetwork::load(string path)
+{
+	// open the text file you want to write in
+	ifstream inFile(path);
+	if(inFile.is_open())
+	{
+		string line;
+		cout << "inputFile opened" << endl;
+		while(getline(inFile, line))
+		{
+			/*
+			Array von Roads erstellen
+			Array von Junctions erstellen
+			Alle erstmal einlesen
+			for(roads){
+			Road.JunctionStartName = Junctions.junctionName
+			road.junctionEndName = Junctions.junctionName
+			mit insert die Road ans ende der RoadMap einfügen und der String ist der Name der Straße
+			}
+			*/
+
+			if(line.find("Road") != string::npos)
+			{
+				cout << "found Road:     ";
+			}
+			else if(line.find("Junction") != string::npos)
+			{
+				cout << "found Junction: ";
+			}
+			else
+			{
+				cout << "only numbers:   ";
+			}
+			cout << line;
+			cout << endl;
+		}
+		inFile.close();
+		cout << "inputFile closed" << endl;
 		return true;
 	}
 	else
@@ -117,9 +171,6 @@ bool RoadNetwork::save(string path)
 
 ostream& operator<<(ostream& os, const RoadNetwork& dt)
 {
-
-
-
 	cout << "<< fertig" << endl;
 	return os;
 }

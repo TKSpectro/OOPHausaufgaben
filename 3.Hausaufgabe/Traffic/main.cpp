@@ -31,15 +31,14 @@ int main()
 	//veh1.setSpeed(13.9);
 	//veh2.setSpeed(13.9);
 
-	rn.save("output.txt");
-
-
+	
 
 	// Test the ouput of an existing roadnetwork
-
+	//rn.save("output.txt");
 
 	// Test the input of an roadnetwork via a text file
-
+	RoadNetwork rn2;
+	rn2.load("input.txt");
 
 
 	//for (int i = 0; i < 100; i++) {

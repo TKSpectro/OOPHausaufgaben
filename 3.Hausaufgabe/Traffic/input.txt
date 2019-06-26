@@ -1,5 +1,4 @@
-Junction 50 50 Knoten1
-Road null Knoten1 Strasse1
-10 10 15 15
-Road Knoten1 null Strasse2
-65 65 100 100
+Junction;100;120;Hanseplatz;IN;Umweg;OUT;LeipzigerStraße;
+Junction;300;250;LeipzigerPlatz;IN;LeipzigerStraße;OUT;Umweg;
+Road;Hanseplatz;LeipzigerPlatz;LeipzigerStraße;100;120;200;400;300;250
+Road;LeipzigerPlatz;Hanseplatz;Umweg;300;250;100;120

@@ -32,8 +32,11 @@ public:
 	void remove(Road& road);
 	void remove(Junction& junction);
 	void draw(Drawer2D& drawer) const;
+	//the course of the roads has to be set to public else we couldnt access it
+	//same goes for the in/outRoad of the Junction
+	//both could be accessed trough a getter function which would return them
 	bool save(string path);
-
+	bool load(string path);
 	friend ostream& operator<<(ostream& os, const RoadNetwork& dt);
 	friend istream& operator>>(istream& os, const RoadNetwork& dt);
 private:
