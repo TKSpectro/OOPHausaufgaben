@@ -15,6 +15,8 @@
 
 #include "Point2D.h"
 #include <list>
+#include <iostream>
+#include <fstream>
 
 using std::list;
 
@@ -32,12 +34,14 @@ public:
 	const char* getName() const;
 	Point2D getLocation() const;
 	void draw(Drawer2D& drawer) const;
-	list<Road*> outRoads;
-	list<Road*> inRoads;
+	//outputs the junction into the ofstream
+	void save(std::ofstream& outFile);
+	Junction* load(std::string line, RoadNetwork* roadn);
 private:
 	char* name;
 	Point2D location;
-
+	list<Road*> outRoads;
+	list<Road*> inRoads;
 	RoadNetwork *network;
 	bool join(Road& road, bool atStart);
 	bool disjoin(Road& road, bool atStart);

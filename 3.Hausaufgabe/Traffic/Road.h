@@ -15,7 +15,8 @@
 
 #include "Vehicle.h"
 #include <map>
-
+#include <fstream>
+#include <iostream>
 using std::map;
 
 #include "Polyline2D.h"
@@ -36,7 +37,8 @@ public:
 	// Returns the coordinate of tzhe given vehicle (if it's on the road),
 	// If the vehicle is off the road, then the result will be invalid
 	Point2D getPosition(const Vehicle& vehicle) const;
-	Polyline2D course;
+	//outputs the road into the ofstream
+	void save(std::ofstream& outFile);
 private:
 	struct VehicleInfo
 	{
@@ -48,7 +50,7 @@ private:
 	Junction* endNode;
 	map<const Vehicle*, VehicleInfo> vehicles;
 	RoadNetwork* networks[MAX_NETWORKS];
-
+	Polyline2D course;
 	char* name;
 };
 

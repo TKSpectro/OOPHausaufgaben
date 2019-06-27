@@ -31,12 +31,12 @@ Junction::~Junction()
 	delete[] this->name;
 }
 
-RoadNetwork * Junction::getNetwork() const
+RoadNetwork* Junction::getNetwork() const
 {
 	return this->network;
 }
 
-const char * Junction::getName() const
+const char* Junction::getName() const
 {
 	return this->name;
 }
@@ -46,30 +46,89 @@ Point2D Junction::getLocation() const
 	return this->location;
 }
 
-void Junction::draw(Drawer2D & drawer) const
+void Junction::draw(Drawer2D& drawer) const
 {
 	this->location.draw(drawer);
 }
 
-bool Junction::join(Road& road, bool atStart) {
-	if (atStart) {
+void Junction::save(std::ofstream& outFile)
+{
+	outFile << "Junction" << ";" // keyword
+		<< this->getLocation().getX() << ";" // x-value
+		<< this->getLocation().getY() << ";" // y-value
+		<< this->getName() << ";"; // junctionName
+
+	//put the inRoads
+	outFile << "IN" << ";";
+	for(auto const& el : this->inRoads)
+	{
+		outFile << el->getName() << ";";
+	}
+	//put the outRoads
+	outFile << "OUT" << ";";
+	for(auto const& el : this->outRoads)
+	{
+		outFile << el->getName() << ";";
+	}
+	outFile << "\n";
+}
+
+Junction* Junction::load(std::string line, RoadNetwork* roadn)
+{
+	string delimiter = ";";
+	unsigned int pos = 0;
+	std::string token;
+
+	//get X
+	pos = line.find(delimiter);
+	token = line.substr(0, pos);
+	line.erase(0, pos + delimiter.length());
+	double x = stod(token);
+	cout << "X-Value:" << token << endl;
+
+	//get Y
+	pos = line.find(delimiter);
+	token = line.substr(0, pos);
+	line.erase(0, pos + delimiter.length());
+	double y = stod(token);
+	cout << "Y-Value:" << token << endl;
+
+	const Point2D* point = new Point2D(x, y);
+
+	//get Name 
+	pos = line.find(delimiter);
+	token = line.substr(0, pos);
+	line.erase(0, pos + delimiter.length());
+	cout << "Name:" << token << endl;
+
+	Junction* junction = new Junction(point, roadn, token);
+}
+
+bool Junction::join(Road& road, bool atStart)
+{
+	if(atStart)
+	{
 		this->outRoads.push_back(&road);
 	}
-	else {
+	else
+	{
 		this->inRoads.push_back(&road);
 	}
 	// TODO Test, ob Straﬂe schon angebunden
 	return true;
 }
 
-bool Junction::disjoin(Road & road, bool atStart)
+bool Junction::disjoin(Road& road, bool atStart)
 {
 	list<Road*>* pList = &this->inRoads;
-	if (atStart) {
+	if(atStart)
+	{
 		pList = &this->outRoads;
 	}
-	for (list<Road*>::iterator iter = pList->begin(); iter != pList->end(); ++iter) {
-		if (*iter == &road) {
+	for(list<Road*>::iterator iter = pList->begin(); iter != pList->end(); ++iter)
+	{
+		if(*iter == &road)
+		{
 			pList->erase(iter);
 			return true;
 		}

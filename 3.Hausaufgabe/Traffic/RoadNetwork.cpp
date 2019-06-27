@@ -66,52 +66,18 @@ bool RoadNetwork::save(string path)
 	{
 		cout << "outputFile opened" << endl;
 
-		//for(string str : this->junctions.first)
+		//output all junctions
 		for(auto const& element : this->junctions)
 		{
-			//Junction(const Point2D& position, RoadNetwork& network, const char junctionName[])
-			/*
-				"Junction PositionX PositionY junctionName"
-			*/
-			outFile << "Junction" << ";" // keyword
-				<< element.second->getLocation().getX() << ";" // x-value
-				<< element.second->getLocation().getY() << ";" // y-value
-				<< element.second->getName() << ";"; // junctionName
-
-			//put the inRoads
-			outFile << "IN" << ";";
-			for(auto const& el : element.second->inRoads)
-			{
-				outFile << el->getName() << ";";
-			}
-			//put the outRoads
-			outFile << "OUT" << ";";
-			for(auto const& el : element.second->outRoads)
-			{
-				outFile << el->getName() << ";";
-			}
-			outFile << "\n";
+			element.second->save(outFile);
 		}
 
+		//output all roads
 		for(auto const& element : this->roads)
 		{
-			//Road(Junction& start, Junction& end, const Polyline2D& position, const char roadName[])
-			/*
-				"Road junctionNameStart junctionNameEnd RoadName
-				All Points in order with -> P1x P1y P2x P2y P3x P3y ...."
-			*/
-			outFile << "Road" << ";" // keyword
-				<< element.second->getJunction(true)->getName() << ";" // startJunction
-				<< element.second->getJunction(false)->getName() << ";" // endJunction
-				<< element.second->getName() << ";"; // roadName
-
-			for(unsigned short i = 0; i < element.second->course.getNumberOfPoints(); i++) //for every point
-			{
-				outFile << element.second->course.getPoint(i).getX() << ";"
-					<< element.second->course.getPoint(i).getY() << ";";
-			}
-			outFile << "\n";
+			element.second->save(outFile);
 		}
+
 		outFile.close();
 		cout << "outputFile closed" << endl;
 		return true;
@@ -142,16 +108,6 @@ bool RoadNetwork::load(string path)
 			mit insert die Road ans ende der RoadMap einfügen und der String ist der Name der Straße
 			}
 			*/
-
-			//if(line.find("Road") != string::npos)
-			//{			
-			//}
-			//else if(line.find("Junction") != string::npos)
-			//{
-			//	//const Point2D& position, RoadNetwork& network, const char junctionName[]
-			//	//double x; double y;
-			//	//Point2D* pos = new Point2D();
-			//	//Junction* junc = new Junction();
 			
 			string delimiter = ";";
 			unsigned int pos = 0;
@@ -162,36 +118,21 @@ bool RoadNetwork::load(string path)
 			line.erase(0, pos + delimiter.length());
 			if(token == "Junction")
 			{
-				cout << "Found Junction" << endl;
-				//get X
-				pos = line.find(delimiter);
-				token = line.substr(0, pos);
-				line.erase(0, pos + delimiter.length());
-				double x = stod(token);
-				cout << "X-Value:" << token << endl;
-
-				//get Y
-				pos = line.find(delimiter);
-				token = line.substr(0, pos);
-				line.erase(0, pos + delimiter.length());
-				double y = stod(token);
-				cout << "Y-Value:" << token << endl;
-
-				//get Name 
-				pos = line.find(delimiter);
-				token = line.substr(0, pos);
-				line.erase(0, pos + delimiter.length());
-				cout << "Name:" << token << endl;
-				char* str = strcpy(token);
-				Point2D* pos = new Point2D(x, y);
-				Junction* junc = new Junction(pos,this, token);
-				
 				
 			}
-			else if(token == "Road")
-			{
-				cout << "Found Road" << endl;
-			}
+			//	cout << "Found Junction" << endl;
+
+
+
+			//	Point2D* pos = new Point2D(x, y);
+			//	Junction* junc = new Junction(pos,this, token);
+			//	
+			//	
+			//}
+			//else if(token == "Road")
+			//{
+			//	cout << "Found Road" << endl;
+			//}
 
 
 

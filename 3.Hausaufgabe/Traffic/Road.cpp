@@ -113,3 +113,18 @@ Point2D Road::getPosition(const Vehicle & vehicle) const
 	return Point2D(0, 0, false);
 }
 
+void Road::save(std::ofstream& outFile)
+{
+	outFile << "Road" << ";" // keyword
+		<< this->getJunction(true)->getName() << ";" // startJunction
+		<< this->getJunction(false)->getName() << ";" // endJunction
+		<< this->getName() << ";"; // roadName
+
+	for(unsigned short i = 0; i < this->course.getNumberOfPoints(); i++) //for every point
+	{
+		outFile << this->course.getPoint(i).getX() << ";"
+			<<this->course.getPoint(i).getY() << ";";
+	}
+	outFile << "\n";
+}
+
