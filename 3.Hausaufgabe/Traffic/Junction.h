@@ -36,7 +36,7 @@ public:
 	void draw(Drawer2D& drawer) const;
 	//outputs the junction into the ofstream
 	void save(std::ofstream& outFile);
-	Junction* load(std::string line, RoadNetwork* roadn);
+	static Junction* load(std::string line, RoadNetwork* roadn);
 private:
 	char* name;
 	Point2D location;

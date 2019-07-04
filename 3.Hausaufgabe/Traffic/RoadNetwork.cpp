@@ -99,16 +99,7 @@ bool RoadNetwork::load(string path)
 		cout << "inputFile opened" << endl;
 		cout << "________________" << endl;
 		while(getline(inFile, line))
-		{
-			/*
-			Alle erstmal einlesen
-			for(roads){
-			Road.JunctionStartName = Junctions.junctionName
-			road.junctionEndName = Junctions.junctionName
-			mit insert die Road ans ende der RoadMap einfügen und der String ist der Name der Straße
-			}
-			*/
-			
+		{			
 			string delimiter = ";";
 			unsigned int pos = 0;
 			std::string token;
@@ -118,44 +109,9 @@ bool RoadNetwork::load(string path)
 			line.erase(0, pos + delimiter.length());
 			if(token == "Junction")
 			{
-				
+				Junction* junc = Junction::load(line, this);
+				this->add(*junc);
 			}
-			//	cout << "Found Junction" << endl;
-
-
-
-			//	Point2D* pos = new Point2D(x, y);
-			//	Junction* junc = new Junction(pos,this, token);
-			//	
-			//	
-			//}
-			//else if(token == "Road")
-			//{
-			//	cout << "Found Road" << endl;
-			//}
-
-
-
-			//while((pos = line.find(delimiter)) != std::string::npos)
-			//{
-			//	token = line.substr(0, pos);
-			//	std::cout << token << std::endl;
-			//	line.erase(0, pos + delimiter.length());
-			//}
-			//cout << line << endl;
-
-
-
-
-			//}
-			//else
-			//{
-			//	cout << "only numbers:   ";
-			//}
-			////cout << line;
-			//cout << endl;
-
-
 		}
 		inFile.close();
 		cout << "----------------" << endl;

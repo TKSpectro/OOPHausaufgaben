@@ -93,15 +93,30 @@ Junction* Junction::load(std::string line, RoadNetwork* roadn)
 	double y = stod(token);
 	cout << "Y-Value:" << token << endl;
 
-	const Point2D* point = new Point2D(x, y);
+	Point2D const* point = new Point2D(x, y);
 
 	//get Name 
 	pos = line.find(delimiter);
 	token = line.substr(0, pos);
 	line.erase(0, pos + delimiter.length());
 	cout << "Name:" << token << endl;
+	const char* name = token.c_str();
 
-	Junction* junction = new Junction(point, roadn, token);
+	//create the junction for further use
+	//Junction* junction = new Junction(point, roadn, name);
+	RoadNetwork rn;
+	Point2D p1(100, 120);
+	Junction j1(p1, rn, "Hanseplatz");
+	while(line != "\n")
+	{
+		pos = line.find(delimiter);
+		token = line.substr(0, pos);
+		line.erase(0, pos + delimiter.length());
+		cout << "Next:" << token << endl;
+	};
+
+	//roadn->add(*junction);
+	return &j1;
 }
 
 bool Junction::join(Road& road, bool atStart)
