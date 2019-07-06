@@ -13,6 +13,7 @@
 #include "RoadNetwork.h"
 #include "Road.h"
 #include <cstring>
+#include <vector>
 
 Junction::Junction(const Point2D& position, RoadNetwork& network, const char junctionName[])
 	: network(&network)
@@ -75,6 +76,17 @@ void Junction::save(std::ofstream& outFile)
 
 Junction* Junction::load(std::string line, RoadNetwork* roadn)
 {
+	//durch diese änderung kann ich es komplett in RoadNetwork ziehen
+	//Modullarisierung ist nicht nötig/logisch, da Junctions/Roads nur für dieses Projekt wirklich genutzt werden
+
+	//Vector von strings erstellen
+	//alle Strings mithilfe des delimiters in den vector pushen
+	//durch den vector laufen und:
+	//x = [0],y = [1] und name = [2] auslesen und speichern
+	//for(unsigned int = 3; i < vector.size()?; i++;
+	//solange inroads einlesen, bis das wort "OUT" kommt
+	//dann die roads als outroads speichern
+
 	string delimiter = ";";
 	unsigned int pos = 0;
 	std::string token;
@@ -102,11 +114,12 @@ Junction* Junction::load(std::string line, RoadNetwork* roadn)
 	cout << "Name:" << token << endl;
 	const char* name = token.c_str();
 
+	char tmp[100] = {};
+	
+	strcpy(tmp, name);
+
 	//create the junction for further use
-	//Junction* junction = new Junction(point, roadn, name);
-	RoadNetwork rn;
-	Point2D p1(100, 120);
-	Junction j1(p1, rn, "Hanseplatz");
+	Junction* junction = new Junction(*point, *roadn, tmp);
 	while(line != "\n")
 	{
 		pos = line.find(delimiter);
@@ -116,7 +129,7 @@ Junction* Junction::load(std::string line, RoadNetwork* roadn)
 	};
 
 	//roadn->add(*junction);
-	return &j1;
+	return junction;
 }
 
 bool Junction::join(Road& road, bool atStart)
