@@ -58,72 +58,8 @@ void Junction::save(std::ofstream& outFile)
 		<< this->getLocation().getX() << ";" // x-value
 		<< this->getLocation().getY() << ";" // y-value
 		<< this->getName() << ";"; // junctionName
-
-	////put the inRoads
-	////outFile << "IN" << ";";
-	//for(auto const& el : this->inRoads)
-	//{
-	//	outFile << el->getName() << ";";
-	//}
-	////put the outRoads
-	//outFile << "OUT" << ";";
-	//for(auto const& el : this->outRoads)
-	//{
-	//	outFile << el->getName() << ";";
-	//}
 	outFile << "\n";
 }
-
-//Junction* Junction::load(std::string line, RoadNetwork* roadn)
-//{
-//	//durch diese änderung kann ich es komplett in RoadNetwork ziehen
-//	//Modullarisierung ist nicht nötig/logisch, da Junctions/Roads nur für dieses Projekt wirklich genutzt werden
-//
-//	//Vector von strings erstellen
-//	//alle Strings mithilfe des delimiters in den vector pushen
-//	//durch den vector laufen und:
-//	//x = [0],y = [1] und name = [2] auslesen und speichern
-//	//for(unsigned int = 3; i < vector.size()?; i++;
-//	//solange inroads einlesen, bis das wort "OUT" kommt
-//	//dann die roads als outroads speichern
-//
-//	string delimiter = ";";
-//	unsigned int pos = 0;
-//	std::string token;
-//
-//	//get X
-//	pos = line.find(delimiter);
-//	token = line.substr(0, pos);
-//	line.erase(0, pos + delimiter.length());
-//	double x = stod(token);
-//	cout << "X-Value:" << token << endl;
-//
-//	//get Y
-//	pos = line.find(delimiter);
-//	token = line.substr(0, pos);
-//	line.erase(0, pos + delimiter.length());
-//	double y = stod(token);
-//	cout << "Y-Value:" << token << endl;
-//
-//	
-//
-//	//get Name 
-//	pos = line.find(delimiter);
-//	token = line.substr(0, pos);
-//	line.erase(0, pos + delimiter.length());
-//	cout << "Name:" << token << endl;
-//	
-//	while(line != "\n")
-//	{
-//		pos = line.find(delimiter);
-//		token = line.substr(0, pos);
-//		line.erase(0, pos + delimiter.length());
-//		cout << "Next:" << token << endl;
-//	};
-//
-//	//roadn->add(*junction);
-//	return junction;
-//}
 
 bool Junction::join(Road& road, bool atStart)
 {

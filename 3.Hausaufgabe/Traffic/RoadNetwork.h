@@ -38,8 +38,6 @@ public:
 	//both could be accessed trough a getter function which would return them
 	bool save(string path);
 	bool load(string path);
-	friend ostream& operator<<(ostream& os, const RoadNetwork& dt);
-	friend istream& operator>>(istream& os, const RoadNetwork& dt);
 private:
 	// char-Pointer ungeeignet als Suchschlüssel (Vergleich über Adresse!)
 	typedef map<string, Junction*> NodeMap;

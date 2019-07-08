@@ -61,24 +61,26 @@ void RoadNetwork::draw(Drawer2D& drawer) const
 
 bool RoadNetwork::save(string path)
 {
-	// open the text file you want to write in
+	//öffnen der Datei an dem übergebenen Pfad in einem Filestream
 	ofstream outFile(path);
+	//nur durchführen wenn der Stream wirklich geöffnet wurde
 	if(outFile.is_open())
 	{
 		cout << "outputFile opened" << endl;
 
-		//output all junctions
+		//schreiben aller Junctions in die Datei
 		for(auto const& element : this->junctions)
 		{
 			element.second->save(outFile);
 		}
 
-		//output all roads
+		//schreiben aller Roads in die Datei
 		for(auto const& element : this->roads)
 		{
 			element.second->save(outFile);
 		}
 
+		//schließen der Datei
 		outFile.close();
 		cout << "outputFile closed" << endl;
 		return true;
@@ -98,7 +100,6 @@ bool RoadNetwork::load(string path)
 	{
 		string line;
 		cout << "inputFile opened" << endl;
-		cout << "________________" << endl;
 		while(getline(inFile, line))
 		{
 			string delimiter = ";";
@@ -135,29 +136,20 @@ bool RoadNetwork::load(string path)
 				char name[256] = {};
 				strcpy(name, tmpName);
 
-				Point2D* point1 = new Point2D(stod(stringVector[4]), stod(stringVector[5]));
-				Point2D* point2 = new Point2D(stod(stringVector[6]), stod(stringVector[7]));
-				Polyline2D* polyline = new Polyline2D(*point1, *point2);
-				for(unsigned int i = 8; i < stringVector.size() - 1; i = i + 2)
+				Point2D* startPoint = new Point2D(this->junctions[stringVector[1]]->getLocation());
+				Point2D* endPoint = new Point2D(this->junctions[stringVector[2]]->getLocation());
+				Polyline2D* polyline = new Polyline2D(*startPoint, *endPoint);
+				for(unsigned int i = 4; i < stringVector.size() - 1; i = i + 2)
 				{
 					Point2D* pointAdd = new Point2D(stod(stringVector[i]), stod(stringVector[i + 1]));
 					polyline->insertPoint(*pointAdd, polyline->getNumberOfPoints());
 				}
-				//*this->junctions.find(Temp_R.s_name)).second
 
-				bool bStart = false;
-				bool bEnd = false;
-
-				if(this->junctions.count(stringVector[1]) > 0)
-					bStart = true;
-				if(this->junctions.count(stringVector[2]) > 0)
-					bEnd = true;
-				if(bStart && bEnd)
-					Road* road = new Road(*(*this->junctions.find(stringVector[1])).second, *(*this->junctions.find(stringVector[2])).second, *polyline, name);
+				if(this->junctions.count(stringVector[1]) > 0 && this->junctions.count(stringVector[2]) > 0)
+					Road* road = new Road(*this->junctions[stringVector[1]], *this->junctions[stringVector[2]], *polyline, name);
 			}
 		}
 		inFile.close();
-		cout << "----------------" << endl;
 		cout << "inputFile closed" << endl;
 		return true;
 	}
@@ -166,41 +158,4 @@ bool RoadNetwork::load(string path)
 		cout << "Unable to open file" << endl;
 		return false;
 	}
-}
-
-ostream& operator<<(ostream& os, const RoadNetwork& dt)
-{
-	cout << "<< fertig" << endl;
-	return os;
-}
-
-istream& operator>>(istream& is, const RoadNetwork& dt)
-{
-	//öffnen der Datei aus der gelesen wird
-	//Prüfen ob die Datei geöffnet wurde
-	//wenn nicht User eingabe des Pfades
-
-	//Erstellen  einer leeren Roadmap
-	//Durch komplette Datei laufen und einlesen:
-	//Array von Roads/Joints anlegen im Heap
-
-
-	//Road(Junction& start, Junction& end, const Polyline2D& position, const char roadName[])
-	/*
-		"Road junctionNameStart junctionNameEnd RoadName
-		All Points in order with -> P1x P1y P2x P2y P3x P3y ...."
-	*/
-
-	//Junction(const Point2D& position, RoadNetwork& network, const char junctionName[])
-	/*
-		"Junction PositionX PositionY junctionName"
-	*/
-
-	//Polyline erstellen mit den punkten die übergeben werden
-	//Array von Roads und Junctions im Heap erstellen lassen bei
-	//mithilfe von zuordnung nullptr befüllen
-	//Roadnetwork::Add nutzen um Road und Junctions hinzuzufügen
-
-	cout << ">> fertig" << endl;
-	return is;
 }

@@ -14,9 +14,8 @@ using std::endl;
 
 int main()
 {
-	//Vehicle veh1;
-	//MotorVehicle veh2(60, 8E-5, MotorVehicle::PETROL);
-
+	TurtleDrawer2D drawer;
+	
 	RoadNetwork rn;
 	Point2D p1(100, 120);
 	Junction j1(p1, rn, "Hanseplatz");
@@ -25,13 +24,6 @@ int main()
 	ls.insertPoint(Point2D(250, 100), 2);
 	Road leipzigerStr(j1, j2, ls, "Leipziger Straﬂe");
 	Road umweg(j2, j1, Polyline2D(Point2D(300, 250), Point2D(100, 150)), "Umweg");
-
-	//leipzigerStr.addVehicle(veh1, true);
-	//leipzigerStr.addVehicle(veh2, true);
-	//veh1.setSpeed(13.9);
-	//veh2.setSpeed(13.9);
-
-	
 
 	// Test the ouput of an existing roadnetwork
 	//rn.save("output.txt");
@@ -43,15 +35,8 @@ int main()
 	//Output rn2
 	rn2.save("outputRN2.txt");
 
+	rn2.draw(drawer);
 
-	//for (int i = 0; i < 100; i++) {
-	//	std::this_thread::sleep_for(std::chrono::milliseconds(2000));
-	//	rn.draw(drawer);
-	//	cout << "veh1 is at position " << veh1.getPosition() << std::endl;
-	//	cout << "veh2 is at position " << veh2.getPosition() << std::endl;
-	//	if (i == 3)	
-	//	veh2.setSpeed(13.9);
-
-	system("pause");
+	//system("pause");
 	return 0;
 }

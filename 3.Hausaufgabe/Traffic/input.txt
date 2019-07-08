@@ -1,4 +1,4 @@
 Junction;100;120;Hanseplatz;
 Junction;300;250;Leipziger Platz;
-Road;Hanseplatz;Leipziger Platz;Leipziger Strasse;100;120;200;400;300;250;
+Road;Hanseplatz;Leipziger Platz;Leipziger Strasse;100;120;50;350;300;250;
 Road;Leipziger Platz;Hanseplatz;Umweg;300;250;100;120;
