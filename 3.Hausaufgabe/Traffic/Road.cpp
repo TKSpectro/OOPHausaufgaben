@@ -127,11 +127,12 @@ Point2D Road::getPosition(const Vehicle& vehicle) const
 
 void Road::save(std::ofstream& outFile)
 {
+	//StartJunction, EndJunction und den Namen schreiben
 	outFile << "Road" << ";" // keyword
 		<< this->getJunction(true)->getName() << ";" // startJunction
 		<< this->getJunction(false)->getName() << ";" // endJunction
 		<< this->getName() << ";"; // roadName
-
+	//Alle Punkte des "Kurses" speichern
 	for(unsigned short i = 0; i < this->course.getNumberOfPoints(); i++) //for every point
 	{
 		outFile << this->course.getPoint(i).getX() << ";"

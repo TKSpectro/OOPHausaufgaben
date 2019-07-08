@@ -54,6 +54,7 @@ void Junction::draw(Drawer2D& drawer) const
 
 void Junction::save(std::ofstream& outFile)
 {
+	//speichern von x, y und den Namen der Junction
 	outFile << "Junction" << ";" // keyword
 		<< this->getLocation().getX() << ";" // x-value
 		<< this->getLocation().getY() << ";" // y-value

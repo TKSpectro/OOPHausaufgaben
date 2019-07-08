@@ -80,6 +80,10 @@ bool RoadNetwork::save(string path)
 			element.second->save(outFile);
 		}
 
+		//für Vehicles müsste man z.B. den Namen und die Geschwindigkeit speichern
+		//Position ist mit der momentan Implementierung von Vehicle zu vernachlässigen,
+		//da man die Position nicht setzen könnte
+
 		//schließen der Datei
 		outFile.close();
 		cout << "outputFile closed" << endl;
@@ -94,12 +98,14 @@ bool RoadNetwork::save(string path)
 
 bool RoadNetwork::load(string path)
 {
-	// open the text file you want to write in
+	//öffnen der Datei in die geschrieben wird
 	ifstream inFile(path);
+	//nur duchführen wenn der Stream wirklich geöffnet wurde
 	if(inFile.is_open())
 	{
-		string line;
 		cout << "inputFile opened" << endl;
+		string line;
+		//solange die Zeilen durchgehen, bis keine mehr gefunden wird
 		while(getline(inFile, line))
 		{
 			string delimiter = ";";
@@ -107,6 +113,7 @@ bool RoadNetwork::load(string path)
 			string token = "a";
 			vector<string> stringVector;
 
+			//alle Wörter dieser Zeile in einen Vector pushen
 			while(!token.empty())
 			{
 				pos = line.find(delimiter);
@@ -115,9 +122,10 @@ bool RoadNetwork::load(string path)
 				stringVector.push_back(token);
 			}
 
+			//wenn das erste Wort = Junction
 			if(stringVector[0] == "Junction")
 			{
-				//create junction
+				//x, y und den Namen einlesen und die Junction erstellen und in das RoadNetwork hinzufügen
 				double x = stod(stringVector[1]);
 				double y = stod(stringVector[2]);
 				const char* tmpName = stringVector[3].c_str();
@@ -126,29 +134,30 @@ bool RoadNetwork::load(string path)
 				Point2D const* point = new Point2D(x, y);
 				Junction* junction = new Junction(*point, *this, name);
 				this->add(*junction);
-				cout << "Junction:" << name << ";" << x << ";" << y << endl;
 			}
+			//wenn das erste Wort = Road
 			else if(stringVector[0] == "Road")
 			{
-				//create roads
-				//Typ; Name; Junction1Name; Junction2Name; x; y; ...; ...;
+				//namen einlesen
 				const char* tmpName = stringVector[3].c_str();
 				char name[256] = {};
 				strcpy(name, tmpName);
-
+				//Punkte aus den zugehörigen Junctions holen und speichern
 				Point2D* startPoint = new Point2D(this->junctions[stringVector[1]]->getLocation());
 				Point2D* endPoint = new Point2D(this->junctions[stringVector[2]]->getLocation());
+				//Polyline erstellen und alle folgenden Punkte dazwischen einfügen
 				Polyline2D* polyline = new Polyline2D(*startPoint, *endPoint);
 				for(unsigned int i = 4; i < stringVector.size() - 1; i = i + 2)
 				{
 					Point2D* pointAdd = new Point2D(stod(stringVector[i]), stod(stringVector[i + 1]));
 					polyline->insertPoint(*pointAdd, polyline->getNumberOfPoints());
 				}
-
+				//Junction erstellen -> wird automatisch durch den Konstruktor in das RoadNetwork hinzugefügt
 				if(this->junctions.count(stringVector[1]) > 0 && this->junctions.count(stringVector[2]) > 0)
 					Road* road = new Road(*this->junctions[stringVector[1]], *this->junctions[stringVector[2]], *polyline, name);
 			}
 		}
+		//Schließen der Datei
 		inFile.close();
 		cout << "inputFile closed" << endl;
 		return true;
