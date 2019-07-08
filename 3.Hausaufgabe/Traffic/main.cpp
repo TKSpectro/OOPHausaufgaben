@@ -40,6 +40,9 @@ int main()
 	RoadNetwork rn2;
 	rn2.load("input.txt");
 
+	//Output rn2
+	rn2.save("outputRN2.txt");
+
 
 	//for (int i = 0; i < 100; i++) {
 	//	std::this_thread::sleep_for(std::chrono::milliseconds(2000));

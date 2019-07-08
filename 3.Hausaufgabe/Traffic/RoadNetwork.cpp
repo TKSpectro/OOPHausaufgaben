@@ -132,27 +132,9 @@ bool RoadNetwork::load(string path)
 			{
 				//create roads
 				//Typ; Name; Junction1Name; Junction2Name; x; y; ...; ...;
-				const char* tmpName = stringVector[1].c_str();
-				/*char name[256] = {};
-				strcpy(name, tmpName);*/
-				/*tmpName = stringVector[2].c_str();
-				char j1name[256] = {};
-				strcpy(j1name, tmpName);
-				tmpName = stringVector[3].c_str();
-				char j2name[256] = {};
-				strcpy(j2name, tmpName);*/
-
-				/*Junction* junctionStart = nullptr;
-				Junction* junctionEnd = nullptr;
-
-				for(auto const& element : this->junctions)
-				{
-					if(element.second->getName() == j1name)
-						junctionStart = element.second;
-					else if(element.second->getName() == j2name)
-						junctionEnd = element.second;
-
-				}*/
+				const char* tmpName = stringVector[3].c_str();
+				char name[256] = {};
+				strcpy(name, tmpName);
 
 				Point2D* point1 = new Point2D(stod(stringVector[4]), stod(stringVector[5]));
 				Point2D* point2 = new Point2D(stod(stringVector[6]), stod(stringVector[7]));
@@ -162,7 +144,17 @@ bool RoadNetwork::load(string path)
 					Point2D* pointAdd = new Point2D(stod(stringVector[i]), stod(stringVector[i + 1]));
 					polyline->insertPoint(*pointAdd, polyline->getNumberOfPoints());
 				}
-				auto road = Road(*this->junctions[stringVector[2]], *this->junctions[stringVector[3]], *polyline, tmpname);
+				//*this->junctions.find(Temp_R.s_name)).second
+
+				bool bStart = false;
+				bool bEnd = false;
+
+				if(this->junctions.count(stringVector[1]) > 0)
+					bStart = true;
+				if(this->junctions.count(stringVector[2]) > 0)
+					bEnd = true;
+				if(bStart && bEnd)
+					Road* road = new Road(*(*this->junctions.find(stringVector[1])).second, *(*this->junctions.find(stringVector[2])).second, *polyline, name);
 			}
 		}
 		inFile.close();

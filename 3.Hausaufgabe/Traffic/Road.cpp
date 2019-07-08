@@ -26,11 +26,13 @@ Road::Road(Junction& start, Junction& end, const Polyline2D& position, const cha
 	this->name = new char[strlen(roadName) + 1];
 	strcpy(name, roadName);
 	// Teste Konsistenz zwischen Topologie und Geometrie, korrigiere Verlauf erforderlichenfalls
-	if (this->startNode->getLocation() != this->course.getStart()) {
+	if(this->startNode->getLocation() != this->course.getStart())
+	{
 		this->course.insertPoint(this->startNode->getLocation(), 0);
 		this->course.removePoint(1);
 	}
-	if (this->endNode->getLocation() != this->course.getEnd()) {
+	if(this->endNode->getLocation() != this->course.getEnd())
+	{
 		int nPoints = this->course.getNumberOfPoints();
 		this->course.insertPoint(this->endNode->getLocation(), nPoints);
 		this->course.removePoint(nPoints - 1);
@@ -38,7 +40,8 @@ Road::Road(Junction& start, Junction& end, const Polyline2D& position, const cha
 	start.join(*this, true);
 	end.join(*this, false);
 	networks[0]->add(*this);
-	if (end.getNetwork() != this->networks[0]) {
+	if(end.getNetwork() != this->networks[0])
+	{
 		this->networks[1] = end.getNetwork();
 		networks[1]->add(*this);
 	}
@@ -49,19 +52,23 @@ Road::~Road()
 	// TODO: Was passiert mit den Fahrzeugen?
 	this->startNode->disjoin(*this, true);
 	this->endNode->disjoin(*this, false);
-	for (RoadNetwork* network : this->networks) {
-		if (network != nullptr) {
+	for(RoadNetwork* network : this->networks)
+	{
+		if(network != nullptr)
+		{
 			network->remove(*this);
 		}
 	}
 	delete[] this->name;
 }
 
-double Road::getLength() {
+double Road::getLength()
+{
 	return this->course.getLength();
 }
 
-bool Road::addVehicle(Vehicle& veh, bool atStart) {
+bool Road::addVehicle(Vehicle& veh, bool atStart)
+{
 	// TODO test auf Vorhandensein
 	VehicleInfo entry = {veh.getPosition(), atStart};
 	this->vehicles[&veh] = entry;
@@ -69,42 +76,47 @@ bool Road::addVehicle(Vehicle& veh, bool atStart) {
 	return true;
 }
 
-bool Road::removeVehicle(Vehicle& veh) {
+bool Road::removeVehicle(Vehicle& veh)
+{
 	map<const Vehicle*, VehicleInfo>::iterator iter = this->vehicles.find(&veh);
-	if (iter != this->vehicles.end()) {
+	if(iter != this->vehicles.end())
+	{
 		this->vehicles.erase(iter);
 		return true;
 	}
 	return false;
 }
 
-const char * Road::getName() const
+const char* Road::getName() const
 {
 	return this->name;
 }
 
-void Road::draw(Drawer2D & drawer) const
+void Road::draw(Drawer2D& drawer) const
 {
 	this->course.draw(drawer);
-	for (auto entry : vehicles) {
+	for(auto entry : vehicles)
+	{
 		entry.first->draw(drawer);
 	}
 }
 
-Junction * Road::getJunction(bool atStart) const
+Junction* Road::getJunction(bool atStart) const
 {
 	return atStart ? this->startNode : this->endNode;
 }
 
-Point2D Road::getPosition(const Vehicle & vehicle) const
+Point2D Road::getPosition(const Vehicle& vehicle) const
 {
 	map<const Vehicle*, VehicleInfo>::const_iterator iter = this->vehicles.find(&vehicle);
-	if (iter != this->vehicles.end()) {
+	if(iter != this->vehicles.end())
+	{
 		double odo = vehicle.getPosition();
 		double dist = odo - iter->second.startPosition;
 		// Falls das Fahrzeug vom Endknoten her kommt, muss die Entfernung von
 		// der Länge abgezogen werden
-		if (!iter->second.atStart) {
+		if(!iter->second.atStart)
+		{
 			dist = this->course.getLength() - dist;
 		}
 		return this->course.getPointAt(dist);
@@ -123,7 +135,7 @@ void Road::save(std::ofstream& outFile)
 	for(unsigned short i = 0; i < this->course.getNumberOfPoints(); i++) //for every point
 	{
 		outFile << this->course.getPoint(i).getX() << ";"
-			<<this->course.getPoint(i).getY() << ";";
+			<< this->course.getPoint(i).getY() << ";";
 	}
 	outFile << "\n";
 }
