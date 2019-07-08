@@ -2,6 +2,7 @@
 #include "Junction.h"
 #include "Road.h"
 #include <sstream>
+#include <vector>
 
 bool RoadNetwork::add(Junction& junction)
 {
@@ -99,18 +100,69 @@ bool RoadNetwork::load(string path)
 		cout << "inputFile opened" << endl;
 		cout << "________________" << endl;
 		while(getline(inFile, line))
-		{			
+		{
+			bool isInRoad = true;
 			string delimiter = ";";
 			unsigned int pos = 0;
-			std::string token;
-			//Function or Road
-			pos = line.find(delimiter);
-			token = line.substr(0, pos);
-			line.erase(0, pos + delimiter.length());
-			if(token == "Junction")
+			std::string token = "a";
+			std::vector<string> stringVector;
+
+			while(!token.empty())
 			{
-				Junction* junc = Junction::load(line, this);
-				this->add(*junc);
+				pos = line.find(delimiter);
+				token = line.substr(0, pos);
+				line.erase(0, pos + delimiter.length());
+				stringVector.push_back(token);
+			}
+
+			if(stringVector[0] == "Junction")
+			{
+				//create junction
+				double x = stod(stringVector[1]);
+				double y = stod(stringVector[2]);
+				const char* tmpName = stringVector[3].c_str();
+				char name[256] = {};
+				strcpy(name, tmpName);
+				Point2D const* point = new Point2D(x, y);
+				Junction* junction = new Junction(*point, *this, name);
+				this->add(*junction);
+				cout << "Junction:" << name << ";" << x << ";" << y << endl;
+			}
+			else if(stringVector[0] == "Road")
+			{
+				//create roads
+				//Typ; Name; Junction1Name; Junction2Name; x; y; ...; ...;
+				const char* tmpName = stringVector[1].c_str();
+				/*char name[256] = {};
+				strcpy(name, tmpName);*/
+				/*tmpName = stringVector[2].c_str();
+				char j1name[256] = {};
+				strcpy(j1name, tmpName);
+				tmpName = stringVector[3].c_str();
+				char j2name[256] = {};
+				strcpy(j2name, tmpName);*/
+
+				/*Junction* junctionStart = nullptr;
+				Junction* junctionEnd = nullptr;
+
+				for(auto const& element : this->junctions)
+				{
+					if(element.second->getName() == j1name)
+						junctionStart = element.second;
+					else if(element.second->getName() == j2name)
+						junctionEnd = element.second;
+
+				}*/
+
+				Point2D* point1 = new Point2D(stod(stringVector[4]), stod(stringVector[5]));
+				Point2D* point2 = new Point2D(stod(stringVector[6]), stod(stringVector[7]));
+				Polyline2D* polyline = new Polyline2D(*point1, *point2);
+				for(unsigned int i = 8; i < stringVector.size() - 1; i = i + 2)
+				{
+					Point2D* pointAdd = new Point2D(stod(stringVector[i]), stod(stringVector[i + 1]));
+					polyline->insertPoint(*pointAdd, polyline->getNumberOfPoints());
+				}
+				auto road = Road(*this->junctions[stringVector[2]], *this->junctions[stringVector[3]], *polyline, tmpname);
 			}
 		}
 		inFile.close();

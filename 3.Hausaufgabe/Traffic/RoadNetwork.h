@@ -10,6 +10,7 @@
 //
 #if !defined(ROADNETWORK_H)
 #define ROADNETWORK_H
+#define _CRT_SECURE_NO_WARNINGS
 
 #include <map>
 #include <string>
