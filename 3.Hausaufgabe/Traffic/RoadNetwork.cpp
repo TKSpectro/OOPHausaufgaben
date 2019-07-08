@@ -101,11 +101,10 @@ bool RoadNetwork::load(string path)
 		cout << "________________" << endl;
 		while(getline(inFile, line))
 		{
-			bool isInRoad = true;
 			string delimiter = ";";
 			unsigned int pos = 0;
-			std::string token = "a";
-			std::vector<string> stringVector;
+			string token = "a";
+			vector<string> stringVector;
 
 			while(!token.empty())
 			{

@@ -1,6 +1,10 @@
 Aufbau einer Datei zum einlesen:
+ACHTUNG: Zuerst ALLE Junctions und dann alle Roads
+
 Für Junctions:
-Typ;x;y;Name;inRoads;...;"OUT";outRoads;...;
+"Junction";x;y;Name;inRoads;...;"OUT";outRoads;...;
 Für Roads:
-Typ;Name;Junction1Name;Junction2Name;x;y;...;...;
+"Road";Junction1Name;Junction2Name;Name;x;y;...;...;
 Road;Leipziger Platz;Hanseplatz;Umweg;300;250;100;120;
+Für Vehicle:
+"Vehicle";RoadName;Speed;
